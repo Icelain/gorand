@@ -1,12 +1,20 @@
 package gorand
 
 import (
+	"fmt"
 	"math/rand"
+	"os"
 	"time"
 )
 
 //RandIntn generates new seed and returns random integer within range
 func RandIntn(stop int) int {
+
+	if stop < 0 {
+		fmt.Println("Stop has to be larger than 0")
+		os.Exit(0)
+	}
+
 	x1 := rand.NewSource(time.Now().UnixNano())
 	y1 := rand.New(x1)
 	return y1.Intn(stop)
@@ -17,7 +25,8 @@ func RandRange(start int, stop int) int {
 
 	x1 := rand.NewSource(time.Now().UnixNano())
 	y1 := rand.New(x1)
-	return y1.Intn(start-stop) + stop
+	random := y1.Intn(stop - start)
+	return random + start
 }
 
 //RandIntc generates a seed and returns a random element from an integer slice
